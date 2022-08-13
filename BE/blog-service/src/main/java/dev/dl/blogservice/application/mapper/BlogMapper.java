@@ -2,12 +2,31 @@ package dev.dl.blogservice.application.mapper;
 
 import dev.dl.blogservice.domain.dto.BlogDto;
 import dev.dl.blogservice.domain.entity.Blog;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import dev.dl.common.helper.ObjectHelper;
 
-@Mapper(componentModel = "spring")
-public interface BlogMapper extends BaseMapper<Blog, BlogDto> {
+import java.util.Optional;
 
-    BlogMapper INSTANCE = Mappers.getMapper(BlogMapper.class);
+public class BlogMapper implements BaseMapper<Blog, BlogDto> {
 
+    private static volatile BlogMapper INSTANCE;
+
+    private BlogMapper() {
+    }
+
+    private static synchronized BlogMapper getInstance() {
+        if (Optional.ofNullable(INSTANCE).isEmpty()) {
+            INSTANCE = new BlogMapper();
+        }
+        return INSTANCE;
+    }
+
+    @Override
+    public Blog dtoToEntity(BlogDto dto) throws Exception {
+        return ObjectHelper.mapObjects(dto, Blog.class);
+    }
+
+    @Override
+    public BlogDto entityToDto(Blog entity) throws Exception {
+        return ObjectHelper.mapObjects(entity, BlogDto.class);
+    }
 }

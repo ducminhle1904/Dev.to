@@ -1,9 +1,12 @@
 package dev.dl.blogservice.application.mapper;
 
-public interface BaseMapper<E, D> {
+import dev.dl.common.dto.BaseDto;
+import dev.dl.common.entity.BaseEntity;
 
-    E dtoToEntity(D dto);
+public interface BaseMapper<E extends BaseEntity, D extends BaseDto> {
 
-    D entityToDto(E entity);
+    E dtoToEntity(D dto) throws Exception;
+
+    D entityToDto(E entity) throws Exception;
 
 }
