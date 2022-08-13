@@ -1,0 +1,14 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.cozwork.grpc;
+
+service ProceedMessage {
+  rpc proceed (ClientInput) returns (ServerOutput) {}
+}
+message ClientInput {
+  string message = 1;
+  string serviceName = 2;
+}
+message ServerOutput {
+  string message = 1;
+}
