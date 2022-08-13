@@ -8,7 +8,7 @@ import java.util.UUID;
 @Data
 public abstract class BaseDto {
 
-    private UUID id;
+    private Long id;
     private Boolean active;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
