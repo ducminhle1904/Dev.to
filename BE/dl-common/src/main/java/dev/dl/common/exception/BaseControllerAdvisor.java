@@ -15,6 +15,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+@SuppressWarnings("NullableProblems")
 @RestControllerAdvice
 @Slf4j
 public class BaseControllerAdvisor extends ResponseEntityExceptionHandler {
