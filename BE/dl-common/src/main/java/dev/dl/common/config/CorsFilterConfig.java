@@ -1,4 +1,4 @@
-package dev.dl.blogservice.application.config;
+package dev.dl.common.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;

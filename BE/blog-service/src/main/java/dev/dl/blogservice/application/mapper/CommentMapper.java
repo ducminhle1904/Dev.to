@@ -13,7 +13,7 @@ public class CommentMapper implements BaseMapper<Comment, CommentDto> {
     private CommentMapper() {
     }
 
-    private static synchronized CommentMapper getInstance() {
+    public static synchronized CommentMapper getInstance() {
         if (Optional.ofNullable(INSTANCE).isEmpty()) {
             INSTANCE = new CommentMapper();
         }

@@ -13,7 +13,7 @@ public class BlogMapper implements BaseMapper<Blog, BlogDto> {
     private BlogMapper() {
     }
 
-    private static synchronized BlogMapper getInstance() {
+    public static synchronized BlogMapper getInstance() {
         if (Optional.ofNullable(INSTANCE).isEmpty()) {
             INSTANCE = new BlogMapper();
         }
