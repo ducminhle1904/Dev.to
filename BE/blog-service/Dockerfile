@@ -8,7 +8,7 @@ RUN apt-get update && \
 
 FROM eclipse-temurin:11
 
-ARG JAR_FILE=../target/user-service-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=../target/blog-service-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
 
 ENTRYPOINT ["java","-jar","app.jar"]
