@@ -2,8 +2,8 @@ syntax = "proto3";
 option java_multiple_files = true;
 package dev.dl.grpc.user;
 
-service FindUserById {
-  rpc findUser (UserId) returns (User) {}
+service UserService {
+  rpc findUserById (UserId) returns (User) {}
 }
 message UserId {
   string userId = 1;

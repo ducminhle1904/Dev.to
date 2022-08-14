@@ -1,5 +1,11 @@
 server:
   port: 8081
+  grpc:
+    port: ${SERVER_GRPC_PORT:7071}
+#    server: ${SERVER_GRPC_SERVER:static://localhost:7070}
+grpc:
+  server:
+    port: ${GRPC_PORT:6071}
 spring:
   application:
     name: Coz Contact
