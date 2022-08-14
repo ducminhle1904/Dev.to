@@ -5,7 +5,6 @@ import dev.dl.blogservice.application.request.AddNewBlogRequest;
 import dev.dl.blogservice.application.response.AddNewBlogResponse;
 import dev.dl.blogservice.application.service.BlogService;
 import dev.dl.blogservice.domain.dto.BlogDto;
-import dev.dl.blogservice.domain.entity.Blog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +35,7 @@ public class BlogController {
     }
 
     @GetMapping("/{id}")
-    public BlogDto getBlogById(@PathVariable(name = "id") Long id) throws NoSuchFieldException {
+    public BlogDto getBlogById(@PathVariable(name = "id") Long id) {
         return this.blogService.findBlogById(id);
     }
 

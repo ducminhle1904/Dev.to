@@ -17,5 +17,4 @@ public class BlogDto extends BaseDto {
     private UUID userId;
     private String title;
     private String body;
-    private List<Comment> comments;
 }

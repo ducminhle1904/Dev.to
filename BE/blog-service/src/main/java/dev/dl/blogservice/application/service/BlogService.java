@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -36,7 +35,6 @@ public class BlogService extends BaseService<Blog, BlogRepository> {
         log.info("ADD NEW BLOG");
         Blog blog = BlogMapper.getInstance().dtoToEntity(blogDto);
         blog.setActive(true);
-        //blog.setUserId(UUID.randomUUID());
         return BlogMapper.getInstance().entityToDto(this.save(blog));
     }
 }

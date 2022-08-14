@@ -16,6 +16,4 @@ import java.util.UUID;
 public class CommentDto extends BaseDto {
     private UUID userId;
     private String comment;
-    private Comment parentComment;
-    private Blog blog;
 }
