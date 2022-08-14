@@ -6,7 +6,7 @@ RUN apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get install iputils-ping
 
-FROM eclipse-temurin:11-jdk-alpine
+FROM eclipse-temurin:11
 
 ARG JAR_FILE=../target/user-service-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
