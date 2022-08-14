@@ -13,7 +13,6 @@ public class RequestLoggingFilterConfig {
 
     @Bean
     public CommonsRequestLoggingFilter logFilter() {
-        log.info("logFilter");
         CommonsRequestLoggingFilter filter
                 = new CommonsRequestLoggingFilter();
         filter.setIncludeQueryString(true);

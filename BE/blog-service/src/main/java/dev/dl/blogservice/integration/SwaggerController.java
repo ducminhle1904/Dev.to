@@ -17,7 +17,6 @@ public class SwaggerController {
 
     @GetMapping
     public RedirectView swagger() {
-        log.info("A USER HAS JUST ENTERED SWAGGER");
         return new RedirectView("/swagger-ui/");
     }
 
