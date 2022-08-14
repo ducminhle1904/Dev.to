@@ -17,7 +17,7 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DLException extends Exception {
+public class DLException extends RuntimeException {
 
     private LocalDateTime timestamp;
     private Integer code;

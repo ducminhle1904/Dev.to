@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @SuppressWarnings("com.haulmont.jpb.LombokDataInspection")
-@Inheritance
+//@Inheritance
 @MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
