@@ -1,5 +1,7 @@
 package dev.dl.blogservice.application.mapper;
 
+import dev.dl.blogservice.application.request.AddNewBlogRequest;
+import dev.dl.blogservice.application.response.AddNewBlogResponse;
 import dev.dl.blogservice.domain.dto.BlogDto;
 import dev.dl.blogservice.domain.entity.Blog;
 import dev.dl.common.helper.ObjectHelper;
@@ -42,6 +44,18 @@ public class BlogMapper implements BaseMapper<Blog, BlogDto> {
         }
         try {
             return ObjectHelper.mapObjects(entity, BlogDto.class);
+        } catch (Exception e) {
+            log.warn("EXCEPTION OCCUR WHEN MAPPING {}", e.getMessage());
+            return null;
+        }
+    }
+
+    public BlogDto addNewBlogRequestToDto(AddNewBlogRequest request) {
+        if (Optional.ofNullable(request).isEmpty()) {
+            return null;
+        }
+        try {
+            return ObjectHelper.mapObjects(request, BlogDto.class);
         } catch (Exception e) {
             log.warn("EXCEPTION OCCUR WHEN MAPPING {}", e.getMessage());
             return null;
