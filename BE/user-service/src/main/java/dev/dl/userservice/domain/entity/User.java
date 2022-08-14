@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @SuppressWarnings({"com.haulmont.jpb.LombokDataInspection", "JpaDataSourceORMInspection", "Lombok"})
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema = "public")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

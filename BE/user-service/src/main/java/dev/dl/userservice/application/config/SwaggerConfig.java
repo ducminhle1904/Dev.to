@@ -29,7 +29,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .groupName("dev-dl")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("dev.dl.blogservice.integration")) // controller package
+                .apis(RequestHandlerSelectors.basePackage("dev.dl.userservice.integration")) // controller package
                 //.apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
