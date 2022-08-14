@@ -1,17 +1,17 @@
 import { registerApplication, start } from "single-spa";
+import { constructApplications, constructRoutes, constructLayoutEngine } from "single-spa-layout";
 
-registerApplication({
-  name: "@org1/react-app",
-  app: () => System.import("@org1/react-app"),
-  activeWhen: ["/react"],
+const routes = constructRoutes(document.querySelector("#single-spa-layout"));
+const applications = constructApplications({
+    routes,
+    loadApp({ name }) {
+        return System.import(name);
+    },
 });
+const layoutEngine = constructLayoutEngine({ routes, applications });
 
-registerApplication({
-  name: "angular-app",
-  app: () => System.import("angular-app"),
-  activeWhen: ["/angular"],
-});
-
+applications.forEach(registerApplication);
+layoutEngine.activate();
 start({
-  urlRerouteOnly: true,
+    urlRerouteOnly: true,
 });
