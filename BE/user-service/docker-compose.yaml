@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+
+  dev-dl-user:
+    container_name: dev-dl-user
+    image: dev-dl-user
+    environment:
+      - SERVER_PORT=8081
+      - SERVER_GRPC_PORT=7071
+      - GRPC_PORT=6071
+      - DB_URL=jdbc:postgresql://host.docker.internal:5432/dev_dl_user
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=mysecretpassword
+    ports:
+      - 8081:8081
+      - 7071:7071

@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: ${SERVER_PORT:8081}
   grpc:
     port: ${SERVER_GRPC_PORT:7071}
 #    server: ${SERVER_GRPC_SERVER:static://localhost:7070}
