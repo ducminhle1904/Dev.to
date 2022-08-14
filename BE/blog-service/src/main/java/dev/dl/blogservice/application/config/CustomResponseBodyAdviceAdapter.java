@@ -39,9 +39,8 @@ public class CustomResponseBodyAdviceAdapter implements ResponseBodyAdvice<Objec
                                   ServerHttpResponse serverHttpResponse) {
         if (o instanceof BaseResponse) {
             try {
-                ((BaseResponse) o).setRequestId(
-                        (String) ((ServletServerHttpRequest) serverHttpRequest).getServletRequest().getAttribute("request_id")
-                );
+                String requestId = (String) ((ServletServerHttpResponse) serverHttpResponse).getServletResponse().getHeader("Request-Id");
+                ((BaseResponse) o).setRequestId(requestId);
                 if (ObjectHelper.isNullOrEmpty(((BaseResponse) o).getResponseStatus())) {
                     if (o instanceof ExceptionResponse) {
                         ((BaseResponse) o).setResponseStatus(
