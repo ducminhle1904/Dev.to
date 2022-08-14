@@ -21,7 +21,7 @@ import java.util.UUID;
 @Data
 public class Blog extends BaseEntity {
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private UUID userId;
 
     @Column(name = "title", nullable = false)

@@ -5,8 +5,11 @@ import dev.dl.blogservice.application.request.AddNewBlogRequest;
 import dev.dl.blogservice.application.response.AddNewBlogResponse;
 import dev.dl.blogservice.application.service.BlogService;
 import dev.dl.blogservice.domain.dto.BlogDto;
+import dev.dl.blogservice.domain.entity.Blog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +30,14 @@ public class BlogController {
     @PostMapping
     public AddNewBlogResponse addNewBlog(@RequestBody AddNewBlogRequest request) {
         request.validate();
-        Integer[] intas = new Integer[]{};
-        System.out.println(intas[12]);
         BlogDto blogDto = BlogMapper.getInstance().addNewBlogRequestToDto(request);
         this.blogService.addNewBlog(blogDto);
         return new AddNewBlogResponse();
+    }
+
+    @GetMapping("/{id}")
+    public BlogDto getBlogById(@PathVariable(name = "id") Long id) throws NoSuchFieldException {
+        return this.blogService.findBlogById(id);
     }
 
 }

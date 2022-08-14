@@ -129,7 +129,7 @@ public class ObjectHelper {
             try {
                 value = field.get(source);
                 if (value != null) {
-                    Field fieldToSet = target.getDeclaredField(field.getName());
+                    Field fieldToSet = targetClassFields.stream().filter(field1 -> field1.getName().equals(field.getName())).collect(Collectors.toList()).get(0);
                     fieldToSet.setAccessible(true);
                     fieldToSet.set(result, value);
                 }
