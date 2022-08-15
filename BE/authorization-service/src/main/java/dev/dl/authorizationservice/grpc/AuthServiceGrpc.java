@@ -60,7 +60,7 @@ public class AuthServiceGrpc extends dev.dl.grpc.auth.AuthServiceGrpc.AuthServic
                             .build();
                 }
                 User user = optionalUser.get();
-                List<String> roles = user.getRoleUsers().stream().map(roleUser -> roleUser.getRole().getRoleName()).collect(Collectors.toList());
+                List<String> roles = this.userRepository.findRoleOfUser(user.getUserId());
                 AuthenticationResult.Builder authenticationResultBuilder = AuthenticationResult.newBuilder()
                         .setUserId(user.getUserId().toString())
                         .setLock(user.isActive());
