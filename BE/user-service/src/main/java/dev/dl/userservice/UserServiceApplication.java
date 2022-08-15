@@ -86,15 +86,15 @@ public class UserServiceApplication implements CommandLineRunner {
         } else {
             roles.add(optionalModeratorRole.get());
         }
-        Optional<User> optionalUser = this.userRepository.findByFirstNameAndLastName("SYSTEM", "ADMIN");
+        Optional<User> optionalUser = this.userRepository.findByFirstNameAndLastName("SYSTEM", Constant.ADMIN_ROLE);
         if (optionalUser.isEmpty()) {
             User user = new User();
             user.setUserId(UUID.randomUUID());
             user.setFirstName("SYSTEM");
-            user.setLastName("ADMIN");
+            user.setLastName(Constant.ADMIN_ROLE);
             user.setUsername("admin");
-            user.setCreatedBy("ADMIN");
-            user.setUpdatedBy("ADMIN");
+            user.setCreatedBy(Constant.ADMIN_ROLE);
+            user.setUpdatedBy(Constant.ADMIN_ROLE);
             user.setPassword(SHA1Helper.encryptThisString("admin"));
             User user1 = this.userRepository.save(user);
             List<RoleUser> roleUsers = new ArrayList<>();
