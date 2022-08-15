@@ -70,4 +70,6 @@ public final class Constant {
     public static final String MODERATOR_ROLE = "MODERATOR";
 
     public static final String USER_ROLE = "USER";
+
+    public static final String UUID_REGEX = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
 }

@@ -24,9 +24,9 @@ public class GrpcService {
                 .build();
     }
 
-    public User findUserById(long id) {
+    public User findUserById(String id) {
         log.info("[GRPC SEND REQUEST] FIND USER WITH ID {}", id);
-        UserId userIdRequest = UserId.newBuilder().setUserId(String.valueOf(id)).build();
+        UserId userIdRequest = UserId.newBuilder().setUserId(id).build();
         User response;
         try {
             final UserServiceGrpc.UserServiceBlockingStub blockingStub = UserServiceGrpc.newBlockingStub(managedChannel());

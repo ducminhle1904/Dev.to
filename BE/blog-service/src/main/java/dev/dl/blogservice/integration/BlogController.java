@@ -44,7 +44,7 @@ public class BlogController {
     }
 
     @GetMapping("/user/{id}")
-    public String getUserById(@PathVariable(name = "id") Long id) {
+    public String getUserById(@PathVariable(name = "id") String id) {
         return this.grpcService.findUserById(id).toString();
     }
 
