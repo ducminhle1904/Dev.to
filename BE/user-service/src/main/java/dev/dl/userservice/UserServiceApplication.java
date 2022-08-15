@@ -92,6 +92,8 @@ public class UserServiceApplication implements CommandLineRunner {
             user.setFirstName("SYSTEM");
             user.setLastName("ADMIN");
             user.setUsername("admin");
+            user.setCreatedBy("ADMIN");
+            user.setUpdatedBy("ADMIN");
             user.setPassword(passwordEncoder.encode("admin"));
             User user1 = this.userRepository.save(user);
             List<RoleUser> roleUsers = new ArrayList<>();
