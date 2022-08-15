@@ -108,14 +108,12 @@ public class AuthServiceGrpc extends dev.dl.grpc.auth.AuthServiceGrpc.AuthServic
         }
         User user = optionalUser.get();
         long millisecond = toMilliSeconds(jwtExpirationDay);
-        String roleList = user.getRoleUsers().stream().map(roleUser -> roleUser.getRole().getRoleName()).collect(Collectors.joining(","));
         Date expiredDate = new Date((new Date()).getTime() + millisecond);
         String jwtToken = Jwts.builder()
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(expiredDate)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                .claim("role", roleList)
                 .claim("userId", user.getUserId())
                 .compact();
         CredentialResult credentialResult = CredentialResult.newBuilder().setToken(jwtToken).build();
