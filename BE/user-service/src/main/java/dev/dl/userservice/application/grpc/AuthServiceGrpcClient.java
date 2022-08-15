@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class AuthServiceGrpcClient {
@@ -43,11 +45,11 @@ public class AuthServiceGrpcClient {
         }
     }
 
-    public AuthenticationResult auth(String token) {
+    public AuthenticationResult auth(String token, List<String> authority) {
         log.info("[GRPC SEND REQUEST] AUTH FOR USER");
-        AuthToken authToken = AuthToken.newBuilder().setToken(token).build();
-        AuthenticationResult result;
         try {
+            AuthToken authToken = AuthToken.newBuilder().setToken(token).addAllAuthorityRole(authority).build();
+            AuthenticationResult result;
             final AuthServiceGrpc.AuthServiceBlockingStub blockingStub = AuthServiceGrpc.newBlockingStub(managedChannel());
             result = blockingStub.auth(authToken);
             return result;

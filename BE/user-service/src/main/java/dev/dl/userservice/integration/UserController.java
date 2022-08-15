@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -63,7 +62,12 @@ public class UserController {
 
     @PostMapping("/validate/{token}")
     public AuthResponse login(@PathVariable(name = "token") String token) {
-        AuthenticationResult authenticationResult = this.authServiceGrpcClient.auth(token);
+        AuthenticationResult authenticationResult = this.authServiceGrpcClient.auth(token, null);
         return new AuthResponse(authenticationResult.getUserId(), authenticationResult.getRoleList(), authenticationResult.getNonLock());
+    }
+
+    @PostMapping("/validate")
+    public AuthResponse check() {
+        return new AuthResponse();
     }
 }
