@@ -1,6 +1,7 @@
 package dev.dl.userservice;
 
 import dev.dl.common.constant.Constant;
+import dev.dl.common.helper.SHA1Helper;
 import dev.dl.userservice.application.grpc.GrpcServer;
 import dev.dl.userservice.domain.entity.Role;
 import dev.dl.userservice.domain.entity.RoleUser;
@@ -94,7 +95,7 @@ public class UserServiceApplication implements CommandLineRunner {
             user.setUsername("admin");
             user.setCreatedBy("ADMIN");
             user.setUpdatedBy("ADMIN");
-            user.setPassword(passwordEncoder.encode("admin"));
+            user.setPassword(SHA1Helper.encryptThisString("admin"));
             User user1 = this.userRepository.save(user);
             List<RoleUser> roleUsers = new ArrayList<>();
             roles.forEach(role -> {
