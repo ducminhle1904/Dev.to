@@ -1,8 +1,10 @@
 package dev.dl.userservice.application.config;
 
 import dev.dl.common.helper.DateTimeHelper;
+import dev.dl.userservice.application.grpc.AuthServiceGrpcClient;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,6 +24,13 @@ public class RequestFilter extends OncePerRequestFilter {
 
     @Value("${server.port}")
     private String serverPort;
+
+    private final AuthServiceGrpcClient authServiceGrpcClient;
+
+    @Autowired
+    public RequestFilter(AuthServiceGrpcClient authServiceGrpcClient) {
+        this.authServiceGrpcClient = authServiceGrpcClient;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
