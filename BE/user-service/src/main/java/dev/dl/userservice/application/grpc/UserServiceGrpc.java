@@ -1,5 +1,6 @@
 package dev.dl.userservice.application.grpc;
 
+import dev.dl.common.constant.Constant;
 import dev.dl.common.helper.ValidateHelper;
 import dev.dl.grpc.user.User;
 import dev.dl.grpc.user.UserId;
@@ -35,7 +36,7 @@ public class UserServiceGrpc extends dev.dl.grpc.user.UserServiceGrpc.UserServic
             responseObserver.onCompleted();
             return;
         }
-        if (ValidateHelper.validate("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", request.getUserId())) {
+        if (ValidateHelper.validate(Constant.UUID_REGEX, request.getUserId())) {
             UUID userId = UUID.fromString(request.getUserId());
             UserDto userDto = this.userService.findUserByUserId(userId);
             User response = User.newBuilder()
