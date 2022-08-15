@@ -3,18 +3,21 @@ package dev.dl.userservice.integration;
 import dev.dl.common.exception.DLException;
 import dev.dl.common.helper.DateTimeHelper;
 import dev.dl.common.helper.ObjectHelper;
+import dev.dl.grpc.auth.AuthenticationResult;
 import dev.dl.grpc.auth.CredentialResult;
 import dev.dl.userservice.application.grpc.AuthServiceGrpcClient;
 import dev.dl.userservice.application.mapper.UserMapper;
 import dev.dl.userservice.application.request.AddNewUserRequest;
 import dev.dl.userservice.application.request.LogInRequest;
 import dev.dl.userservice.application.response.AddNewUserResponse;
+import dev.dl.userservice.application.response.AuthResponse;
 import dev.dl.userservice.application.response.LogInResponse;
 import dev.dl.userservice.application.service.UserService;
 import dev.dl.userservice.domain.dto.UserDto;
 import dev.dl.userservice.domain.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,5 +59,11 @@ public class UserController {
                     .message("Wrong username or password").build();
         }
         return new LogInResponse(credentialResult.getToken());
+    }
+
+    @PostMapping("/validate/{token}")
+    public AuthResponse login(@PathVariable(name = "token") String token) {
+        AuthenticationResult authenticationResult = this.authServiceGrpcClient.auth(token);
+        return new AuthResponse(authenticationResult.getUserId(), authenticationResult.getRoleList(), authenticationResult.getLock());
     }
 }

@@ -77,7 +77,7 @@ public class AuthServiceGrpc extends dev.dl.grpc.auth.AuthServiceGrpc.AuthServic
     }
 
     private static void hasAuthority(Claims claims, List<String> authorities) {
-        if (!ObjectHelper.isNullOrEmpty(authorities)) {
+        if (ObjectHelper.isNullOrEmpty(authorities)) {
             return;
         }
         List<String> tokenRole = List.of((String.valueOf(claims.get("role"))).split(","));
