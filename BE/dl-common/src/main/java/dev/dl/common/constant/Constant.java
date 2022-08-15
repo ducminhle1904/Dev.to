@@ -55,10 +55,6 @@ public final class Constant {
 
     public static final String UNDERSCORE = "_";
 
-    public static final String PRODUCT_IMAGE_CATEGORY = "product";
-
-    public static final String USER_IMAGE_CATEGORY = "user";
-
     public static final String SLASH = "/";
 
     public static final String BACKSLASH = "\\";
