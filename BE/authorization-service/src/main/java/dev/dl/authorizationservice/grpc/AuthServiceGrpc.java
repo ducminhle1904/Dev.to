@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
 public class AuthServiceGrpc extends dev.dl.grpc.auth.AuthServiceGrpc.AuthServiceImplBase {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
 
     @Value("${security.jwt-secret}")
     private String jwtSecret;
@@ -43,7 +42,6 @@ public class AuthServiceGrpc extends dev.dl.grpc.auth.AuthServiceGrpc.AuthServic
     @Autowired
     public AuthServiceGrpc(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
     }
 
     @Override
