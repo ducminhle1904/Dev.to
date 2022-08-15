@@ -1,9 +1,15 @@
 package dev.dl.userservice.integration;
 
+import dev.dl.common.exception.DLException;
+import dev.dl.common.helper.DateTimeHelper;
 import dev.dl.common.helper.ObjectHelper;
+import dev.dl.grpc.auth.CredentialResult;
+import dev.dl.userservice.application.grpc.AuthServiceGrpcClient;
 import dev.dl.userservice.application.mapper.UserMapper;
 import dev.dl.userservice.application.request.AddNewUserRequest;
+import dev.dl.userservice.application.request.LogInRequest;
 import dev.dl.userservice.application.response.AddNewUserResponse;
+import dev.dl.userservice.application.response.LogInResponse;
 import dev.dl.userservice.application.service.UserService;
 import dev.dl.userservice.domain.dto.UserDto;
 import dev.dl.userservice.domain.entity.User;
@@ -14,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -22,10 +29,12 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final AuthServiceGrpcClient authServiceGrpcClient;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthServiceGrpcClient authServiceGrpcClient) {
         this.userService = userService;
+        this.authServiceGrpcClient = authServiceGrpcClient;
     }
 
     @PostMapping
@@ -37,8 +46,15 @@ public class UserController {
         return new AddNewUserResponse();
     }
 
-    @PostMapping
-    public void login() {
-        
+    @PostMapping("/log-in")
+    public LogInResponse login(@RequestBody LogInRequest request) {
+        request.validate();
+        CredentialResult credentialResult = this.authServiceGrpcClient.login(request.getUsername(), request.getPassword());
+        if (Optional.ofNullable(credentialResult).isEmpty()) {
+            throw DLException.newBuilder()
+                    .timestamp(DateTimeHelper.generateCurrentTimeDefault())
+                    .message("Wrong username or password").build();
+        }
+        return new LogInResponse(credentialResult.getToken());
     }
 }

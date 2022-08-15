@@ -1,5 +1,6 @@
 package dev.dl.userservice.application.grpc;
 
+import dev.dl.common.helper.SHA1Helper;
 import dev.dl.grpc.auth.AuthServiceGrpc;
 import dev.dl.grpc.auth.AuthToken;
 import dev.dl.grpc.auth.AuthenticationResult;
@@ -28,7 +29,7 @@ public class AuthServiceGrpcClient {
 
     public CredentialResult login(String username, String password) {
         log.info("[GRPC SEND REQUEST] LOG IN FOR USER {}", username);
-        Credential credential = Credential.newBuilder().setUsername(username).setPassword(password).build();
+        Credential credential = Credential.newBuilder().setUsername(username).setPassword(SHA1Helper.encryptThisString(password)).build();
         CredentialResult result;
         try {
             final AuthServiceGrpc.AuthServiceBlockingStub blockingStub = AuthServiceGrpc.newBlockingStub(managedChannel());
