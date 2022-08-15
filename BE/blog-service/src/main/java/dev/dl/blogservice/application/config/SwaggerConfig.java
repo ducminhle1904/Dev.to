@@ -34,8 +34,6 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(getApiInfo())
-                .securityContexts(List.of(securityContext()))
-                .securitySchemes(List.of(apiKey()))
                 .useDefaultResponseMessages(false);
     }
 
@@ -67,23 +65,6 @@ public class SwaggerConfig {
                 .supportedSubmitMethods(UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS)
                 .validatorUrl(null)
                 .build();
-    }
-
-    private ApiKey apiKey() {
-        return new ApiKey("ApiKey", "Authorization", "header");
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth()).build();
-    }
-
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[2];
-        authorizationScopes[0] = authorizationScope;
-        authorizationScopes[1] = authorizationScope;
-        return List.of(new SecurityReference("ApiKey", authorizationScopes),
-                new SecurityReference("Authorization", authorizationScopes));
     }
 
 }

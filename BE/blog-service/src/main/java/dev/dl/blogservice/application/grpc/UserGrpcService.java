@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class GrpcService {
+public class UserGrpcService {
 
     @Value("${server.grpc.server}")
     private String serverAddress;
