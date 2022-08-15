@@ -9,4 +9,6 @@ public interface UserRepository extends BaseRepository<User> {
 
     Optional<User> findByUserId(UUID userId);
 
+    Optional<User> findByFirstNameAndLastName(String firstName, String lastName);
+
 }
