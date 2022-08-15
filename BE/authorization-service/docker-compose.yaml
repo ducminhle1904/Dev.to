@@ -5,9 +5,9 @@ services:
     container_name: dev-dl-auth
     image: dev-dl-auth
     environment:
-      - SERVER_PORT=8081
-      - SERVER_GRPC_PORT=7071
-      - GRPC_PORT=6071
+      - SERVER_PORT=8082
+      - SERVER_GRPC_PORT=7072
+      - GRPC_PORT=6072
       - DB_URL=jdbc:postgresql://host.docker.internal:5432/dev_dl_user
       - DB_USERNAME=postgres
       - DB_PASSWORD=mysecretpassword
