@@ -8,7 +8,7 @@ grpc:
     port: ${GRPC_PORT:6070}
 spring:
   application:
-    name: Coz Contact
+    name: Dev DL Blog
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/dev_dl_blog}
     username: ${DB_USERNAME:postgres}
