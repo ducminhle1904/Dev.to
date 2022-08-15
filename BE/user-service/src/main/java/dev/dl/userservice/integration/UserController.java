@@ -64,6 +64,6 @@ public class UserController {
     @PostMapping("/validate/{token}")
     public AuthResponse login(@PathVariable(name = "token") String token) {
         AuthenticationResult authenticationResult = this.authServiceGrpcClient.auth(token);
-        return new AuthResponse(authenticationResult.getUserId(), authenticationResult.getRoleList(), authenticationResult.getLock());
+        return new AuthResponse(authenticationResult.getUserId(), authenticationResult.getRoleList(), authenticationResult.getNonLock());
     }
 }

@@ -1,5 +1,7 @@
 package dev.dl.authorizationservice.grpc;
 
+import com.google.protobuf.Descriptors;
+import dev.dl.authorizationservice.dto.UserRoleDto;
 import dev.dl.authorizationservice.entity.User;
 import dev.dl.authorizationservice.infrastructure.RoleRepository;
 import dev.dl.authorizationservice.infrastructure.UserRepository;
@@ -25,7 +27,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -52,20 +53,18 @@ public class AuthServiceGrpc extends dev.dl.grpc.auth.AuthServiceGrpc.AuthServic
             hasAuthority(claims, request.getAuthorityRoleList());
             String userId = String.valueOf(claims.get("userId"));
             if (ValidateHelper.validate(Constant.UUID_REGEX, userId)) {
-                Optional<User> optionalUser = this.userRepository.findByUserId(UUID.fromString(userId));
-                if (optionalUser.isEmpty()) {
+                List<UserRoleDto> userRoleDtos = this.userRepository.getUserRoleDto(UUID.fromString(userId));
+                if (ObjectHelper.isNullOrEmpty(userRoleDtos)) {
                     throw DLException.newBuilder()
                             .timestamp(DateTimeHelper.generateCurrentTimeDefault())
                             .message("CAN NOT FIND USER")
                             .build();
                 }
-                User user = optionalUser.get();
-                List<String> roles = this.userRepository.findRoleOfUser(user.getUserId());
                 AuthenticationResult.Builder authenticationResultBuilder = AuthenticationResult.newBuilder()
-                        .setUserId(user.getUserId().toString())
-                        .setLock(user.isActive());
-                for (int i = 0; i < roles.size(); i++) {
-                    authenticationResultBuilder.setRole(i, roles.get(i));
+                        .setUserId(userId)
+                        .setNonLock(userRoleDtos.get(0).getActive());
+                for (int i = 0; i < userRoleDtos.size(); i++) {
+                    authenticationResultBuilder.addRole(userRoleDtos.get(i).getRole());
                 }
                 responseObserver.onNext(authenticationResultBuilder.build());
                 responseObserver.onCompleted();

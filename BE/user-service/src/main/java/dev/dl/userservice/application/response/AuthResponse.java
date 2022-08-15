@@ -12,5 +12,5 @@ import java.util.List;
 public class AuthResponse {
     private String userId;
     private List<String> roles;
-    private boolean lock;
+    private boolean nonLock;
 }

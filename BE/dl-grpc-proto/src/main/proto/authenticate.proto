@@ -13,7 +13,7 @@ message AuthToken {
 message AuthenticationResult {
   string userId = 1;
   repeated string role = 2;
-  bool lock = 3;
+  bool nonLock = 3;
 }
 message Credential {
   string username = 1;
