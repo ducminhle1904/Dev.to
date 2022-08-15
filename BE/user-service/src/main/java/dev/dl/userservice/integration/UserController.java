@@ -50,7 +50,7 @@ public class UserController {
     public LogInResponse login(@RequestBody LogInRequest request) {
         request.validate();
         CredentialResult credentialResult = this.authServiceGrpcClient.login(request.getUsername(), request.getPassword());
-        if (Optional.ofNullable(credentialResult).isEmpty()) {
+        if (ObjectHelper.isNullOrEmpty(credentialResult.getToken())) {
             throw DLException.newBuilder()
                     .timestamp(DateTimeHelper.generateCurrentTimeDefault())
                     .message("Wrong username or password").build();
