@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @SuppressWarnings({"com.haulmont.jpb.LombokDataInspection", "JpaDataSourceORMInspection", "Lombok"})
 @Entity
@@ -22,5 +25,8 @@ public class Role extends BaseEntity {
 
     @Column(name = "role_description")
     private String roleDescription;
+
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private List<RoleUser> roleUsers;
 
 }

@@ -11,4 +11,6 @@ public interface UserRepository extends BaseRepository<User> {
 
     Optional<User> findByFirstNameAndLastName(String firstName, String lastName);
 
+    User findByUsernameAndPassword(String firstName, String lastName);
+
 }
