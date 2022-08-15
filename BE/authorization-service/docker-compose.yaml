@@ -12,5 +12,5 @@ services:
       - DB_USERNAME=postgres
       - DB_PASSWORD=mysecretpassword
     ports:
-      - 8081:8081
-      - 7071:7071
+      - 8082:8082
+      - 7072:7072
