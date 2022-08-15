@@ -108,7 +108,7 @@ public class AuthServiceGrpc extends dev.dl.grpc.auth.AuthServiceGrpc.AuthServic
         }
         User user = optionalUser.get();
         List<String> role = this.userRepository.findRoleOfUser(user.getUserId());
-        String roleStrings = role.stream().collect(Collectors.joining(","));
+        String roleStrings = String.join(",", role);
         long millisecond = toMilliSeconds(jwtExpirationDay);
         Date expiredDate = new Date((new Date()).getTime() + millisecond);
         String jwtToken = Jwts.builder()
