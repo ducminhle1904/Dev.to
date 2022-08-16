@@ -11,6 +11,7 @@ services:
       - DB_URL=jdbc:postgresql://host.docker.internal:5432/dev_dl_user
       - DB_USERNAME=postgres
       - DB_PASSWORD=mysecretpassword
+      - SERVER_GRPC_AUTH_SERVER=static://localhost:7072
     ports:
       - 8081:8081
       - 7071:7071
