@@ -13,5 +13,5 @@ import java.util.List;
 public class AuthResponse extends BaseResponse {
     private String userId;
     private List<String> roles;
-    private boolean nonLock;
+    private Boolean nonLock;
 }
