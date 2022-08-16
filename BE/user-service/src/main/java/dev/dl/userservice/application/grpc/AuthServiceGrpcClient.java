@@ -1,5 +1,6 @@
 package dev.dl.userservice.application.grpc;
 
+import dev.dl.common.helper.ObjectHelper;
 import dev.dl.common.helper.SHA1Helper;
 import dev.dl.grpc.auth.AuthServiceGrpc;
 import dev.dl.grpc.auth.AuthToken;
@@ -11,6 +12,7 @@ import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -48,10 +50,16 @@ public class AuthServiceGrpcClient {
     public AuthenticationResult auth(String token, List<String> authority) {
         log.info("[GRPC SEND REQUEST] AUTH FOR USER");
         try {
-            AuthToken authToken = AuthToken.newBuilder().setToken(token).addAllAuthorityRole(authority).build();
+            AuthToken.Builder authToken = AuthToken.newBuilder();
+            if (StringUtils.hasText(token)) {
+                authToken.setToken(token);
+            }
+            if (!ObjectHelper.isNullOrEmpty(authority)) {
+                authToken.addAllAuthorityRole(authority);
+            }
             AuthenticationResult result;
             final AuthServiceGrpc.AuthServiceBlockingStub blockingStub = AuthServiceGrpc.newBlockingStub(managedChannel());
-            result = blockingStub.auth(authToken);
+            result = blockingStub.auth(authToken.build());
             return result;
         } catch (Exception e) {
             log.error("[GRPC SEND REQUEST ERROR] {}", e.getMessage());

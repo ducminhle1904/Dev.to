@@ -25,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import static dev.dl.userservice.application.constant.AppConstant.AUTHENTICATE_API;
 import static javax.servlet.http.HttpServletResponse.SC_SERVICE_UNAVAILABLE;
 
 @SuppressWarnings("NullableProblems")
@@ -77,9 +78,9 @@ public class RequestFilter extends OncePerRequestFilter {
         String token = request.getHeader("Authorization");
         List<String> authority = null;
         boolean isAuthenticate = false;
-        for (String key : AppConstant.AUTHENTICATE_API.keySet()) {
+        for (String key : AUTHENTICATE_API.keySet()) {
             if (key.equalsIgnoreCase(uri)) {
-                authority = AppConstant.AUTHENTICATE_API.get("key");
+                authority = AUTHENTICATE_API.get("key");
                 isAuthenticate = true;
                 break;
             }
