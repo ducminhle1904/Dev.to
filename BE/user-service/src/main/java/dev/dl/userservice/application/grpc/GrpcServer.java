@@ -23,8 +23,8 @@ public class GrpcServer {
     private final UserServiceGrpc userServiceGrpc;
 
     @Autowired
-    public GrpcServer(UserServiceGrpc UserServiceGrpc) {
-        this.userServiceGrpc = UserServiceGrpc;
+    public GrpcServer(UserServiceGrpc userServiceGrpc) {
+        this.userServiceGrpc = userServiceGrpc;
     }
 
     private void start() throws IOException {
@@ -37,7 +37,8 @@ public class GrpcServer {
             try {
                 server.shutdown().awaitTermination(10, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
-                e.printStackTrace(System.err);
+                log.error(e.getMessage());
+                Thread.currentThread().interrupt();
             }
         }));
     }
