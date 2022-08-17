@@ -20,6 +20,7 @@ $ npm install
   ```js
   $ npm start
   ```
+  Same for Header and Footer
   
   In the browser open the application at http://localhost:9000
   
