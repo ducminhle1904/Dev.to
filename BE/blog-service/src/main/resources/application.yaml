@@ -23,3 +23,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
+  graphql:
+    graphiql:
+      enabled: true
+      path: /graphiql
