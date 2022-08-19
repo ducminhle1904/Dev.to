@@ -1,5 +1,6 @@
 package dev.dl.blogservice.domain.graphql;
 
+import dev.dl.blogservice.domain.graphql.valueobject.UserGql;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class BlogGql {
     private String updatedAt;
     private String createdBy;
     private String updatedBy;
-    private String userId;
     private String title;
     private String body;
+    private UserGql user;
 }

@@ -8,7 +8,7 @@ import dev.dl.blogservice.application.response.BlogDetailResponse;
 import dev.dl.blogservice.application.service.BlogService;
 import dev.dl.blogservice.domain.dto.BlogDto;
 import dev.dl.blogservice.domain.graphql.BlogGql;
-import dev.dl.common.helper.ObjectHelper;
+import dev.dl.blogservice.domain.graphql.valueobject.UserGql;
 import dev.dl.grpc.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -55,9 +57,16 @@ public class BlogController {
         this.blogService.findAll();
     }
 
-    @QueryMapping
-    public BlogGql blogById(@Argument(name = "id") String id) {
+    @QueryMapping(name = "blogById")
+    public BlogGql findBlogById(@Argument(name = "id") String id) {
         BlogDto blogDto = this.blogService.findBlogById(Long.parseLong(id));
+        User user = this.userGrpcService.findUserById(blogDto.getUserId().toString());
+        UserGql userGql = new UserGql();
+        if (Optional.ofNullable(user).isPresent()) {
+            userGql.setId(user.getUserId());
+            userGql.setFirstName(user.getFirstName());
+            userGql.setLastName(user.getLastName());
+        }
         return new BlogGql(
                 String.valueOf(blogDto.getId()),
                 String.valueOf(blogDto.getActive()),
@@ -65,9 +74,9 @@ public class BlogController {
                 String.valueOf(blogDto.getUpdatedAt()),
                 String.valueOf(blogDto.getCreatedBy()),
                 String.valueOf(blogDto.getUpdatedBy()),
-                String.valueOf(blogDto.getUserId()),
                 String.valueOf(blogDto.getTitle()),
-                String.valueOf(blogDto.getBody())
+                String.valueOf(blogDto.getBody()),
+                userGql
         );
     }
 

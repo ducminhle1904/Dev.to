@@ -1,5 +1,17 @@
 type Query {
     blogById(id: String): BlogDto
+    blogByDto(request: BlogInput): BlogDto
+}
+
+input BlogInput {
+    id: String
+    active: String
+    createdAt: String
+    updatedAt: String
+    createdBy: String
+    updatedBy: String
+    title: String
+    body: String
 }
 
 type BlogDto {
@@ -9,7 +21,13 @@ type BlogDto {
     updatedAt: String
     createdBy: String
     updatedBy: String
-    userId: String
     title: String
     body: String
+    user: UserDto
+}
+
+type UserDto {
+    id: String
+    firstName: String
+    lastName: String
 }
