@@ -22,6 +22,7 @@ public class GrpcServer {
 
     private final UserServiceGrpc userServiceGrpc;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public GrpcServer(UserServiceGrpc userServiceGrpc) {
         this.userServiceGrpc = userServiceGrpc;
