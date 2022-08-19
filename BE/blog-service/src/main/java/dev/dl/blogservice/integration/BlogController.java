@@ -3,6 +3,7 @@ package dev.dl.blogservice.integration;
 import dev.dl.blogservice.application.grpc.UserGrpcService;
 import dev.dl.blogservice.application.mapper.BlogMapper;
 import dev.dl.blogservice.application.request.AddNewBlogRequest;
+import dev.dl.blogservice.application.request.graphql.BlogInputGql;
 import dev.dl.blogservice.application.response.AddNewBlogResponse;
 import dev.dl.blogservice.application.response.BlogDetailResponse;
 import dev.dl.blogservice.application.service.BlogService;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+@SuppressWarnings("DuplicatedCode")
 @RestController
 @Slf4j
 @RequestMapping("/api/blog")
@@ -58,8 +60,8 @@ public class BlogController {
     }
 
     @QueryMapping(name = "blogById")
-    public BlogGql findBlogById(@Argument(name = "id") String id) {
-        BlogDto blogDto = this.blogService.findBlogById(Long.parseLong(id));
+    public BlogGql findBlogById(@Argument(name = "id") Long id) {
+        BlogDto blogDto = this.blogService.findBlogById(id);
         User user = this.userGrpcService.findUserById(blogDto.getUserId().toString());
         UserGql userGql = new UserGql();
         if (Optional.ofNullable(user).isPresent()) {
@@ -67,17 +69,24 @@ public class BlogController {
             userGql.setFirstName(user.getFirstName());
             userGql.setLastName(user.getLastName());
         }
-        return new BlogGql(
-                String.valueOf(blogDto.getId()),
-                String.valueOf(blogDto.getActive()),
-                String.valueOf(blogDto.getCreatedAt()),
-                String.valueOf(blogDto.getUpdatedAt()),
-                String.valueOf(blogDto.getCreatedBy()),
-                String.valueOf(blogDto.getUpdatedBy()),
-                String.valueOf(blogDto.getTitle()),
-                String.valueOf(blogDto.getBody()),
-                userGql
-        );
+        BlogGql blogGql = BlogMapper.getInstance().dtoToGraphQl(blogDto);
+        blogGql.setUser(userGql);
+        return blogGql;
+    }
+
+    @QueryMapping(name = "blogByDto")
+    public BlogGql findBlogByDto(@Argument(name = "request") BlogInputGql request) {
+        BlogDto blogDto = this.blogService.findBlogById(request.getId());
+        User user = this.userGrpcService.findUserById(blogDto.getUserId().toString());
+        UserGql userGql = new UserGql();
+        if (Optional.ofNullable(user).isPresent()) {
+            userGql.setId(user.getUserId());
+            userGql.setFirstName(user.getFirstName());
+            userGql.setLastName(user.getLastName());
+        }
+        BlogGql blogGql = BlogMapper.getInstance().dtoToGraphQl(blogDto);
+        blogGql.setUser(userGql);
+        return blogGql;
     }
 
 }

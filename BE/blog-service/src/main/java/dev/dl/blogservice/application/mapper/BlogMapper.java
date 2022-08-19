@@ -5,6 +5,7 @@ import dev.dl.blogservice.application.response.AddNewBlogResponse;
 import dev.dl.blogservice.application.response.BlogDetailResponse;
 import dev.dl.blogservice.domain.dto.BlogDto;
 import dev.dl.blogservice.domain.entity.Blog;
+import dev.dl.blogservice.domain.graphql.BlogGql;
 import dev.dl.common.helper.ObjectHelper;
 import dev.dl.grpc.user.User;
 import lombok.extern.slf4j.Slf4j;
@@ -82,5 +83,22 @@ public class BlogMapper implements BaseMapper<Blog, BlogDto> {
             log.warn("EXCEPTION OCCUR WHEN MAPPING {}", e.getMessage());
             return null;
         }
+    }
+
+    public BlogGql dtoToGraphQl(BlogDto dto) {
+        if (Optional.ofNullable(dto).isEmpty()) {
+            return null;
+        }
+        return new BlogGql(
+                dto.getId(),
+                dto.getActive(),
+                dto.getCreatedAt(),
+                dto.getUpdatedAt(),
+                dto.getCreatedBy(),
+                dto.getUpdatedBy(),
+                dto.getTitle(),
+                dto.getBody(),
+                null
+        );
     }
 }
