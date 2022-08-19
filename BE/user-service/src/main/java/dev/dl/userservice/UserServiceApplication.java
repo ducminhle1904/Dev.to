@@ -1,28 +1,14 @@
 package dev.dl.userservice;
 
-import dev.dl.common.constant.Constant;
-import dev.dl.common.helper.SHA1Helper;
 import dev.dl.userservice.application.grpc.GrpcServer;
-import dev.dl.userservice.domain.entity.Role;
-import dev.dl.userservice.domain.entity.RoleUser;
-import dev.dl.userservice.domain.entity.User;
-import dev.dl.userservice.infrastructure.RoleRepository;
-import dev.dl.userservice.infrastructure.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @SpringBootApplication
 @Slf4j
