@@ -1,4 +1,4 @@
-package dev.dl.blogservice.integration;
+package dev.dl.common.config.swagger;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
