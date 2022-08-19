@@ -34,7 +34,10 @@ public class BlogService extends BaseService<Blog, BlogRepository> {
         log.info("FIND BLOG BY ID {}", id);
         Optional<Blog> optionalBlog = this.findById(id);
         if (optionalBlog.isEmpty()) {
-            throw DLException.newBuilder().build();
+            throw DLException.newBuilder()
+                    .message("Blog does not exist")
+                    .timestamp(DateTimeHelper.generateCurrentTimeDefault())
+                    .build();
         }
         return BlogMapper.getInstance().entityToDto(optionalBlog.get());
     }

@@ -2,10 +2,14 @@ package dev.dl.blogservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 
 import java.io.File;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"dev.dl.common.config"})
+@ComponentScan(basePackages = {"dev.dl.common.exception"})
 public class BlogServiceApplication {
 
     private static void setProperty() {
