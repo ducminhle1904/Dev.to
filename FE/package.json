@@ -10,6 +10,19 @@
     "astro": "astro"
   },
   "devDependencies": {
-    "astro": "^1.0.6"
+    "@astrojs/react": "^1.0.0",
+    "@astrojs/sitemap": "^1.0.0",
+    "@astrojs/svelte": "^1.0.0",
+    "@astrojs/tailwind": "^1.0.0",
+    "@astrojs/vercel": "^1.0.0",
+    "astro": "^1.0.6",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "svelte": "^3.46.4"
+  },
+  "dependencies": {
+    "@fontsource/poppins": "^4.5.9",
+    "astro-imagetools": "^0.6.10",
+    "astro-seo": "^0.5.1"
   }
 }
