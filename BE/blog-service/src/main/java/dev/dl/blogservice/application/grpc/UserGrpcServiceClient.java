@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserGrpcServiceClient {
 
-    @Value("${server.grpc.server}")
+    @Value("${server.grpc.user-server}")
     private String serverAddress;
 
     private final ManagedChannel userManagedChannel;

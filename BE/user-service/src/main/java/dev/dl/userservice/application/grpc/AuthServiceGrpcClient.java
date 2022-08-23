@@ -8,8 +8,8 @@ import dev.dl.grpc.auth.AuthenticationResult;
 import dev.dl.grpc.auth.Credential;
 import dev.dl.grpc.auth.CredentialResult;
 import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -25,13 +25,11 @@ public class AuthServiceGrpcClient {
 
     private final ManagedChannel authManagedChannel;
 
-    public AuthServiceGrpcClient() {
-        this.authManagedChannel = ManagedChannelBuilder
-                .forTarget(serverAddress)
-                .defaultLoadBalancingPolicy("round_robin")
-                .usePlaintext()
-                .build();
+    @Autowired
+    public AuthServiceGrpcClient(ManagedChannel authManagedChannel) {
+        this.authManagedChannel = authManagedChannel;
     }
+
 
     public CredentialResult login(String username, String password) {
         log.info("[GRPC SEND REQUEST] LOG IN FOR USER {}", username);
