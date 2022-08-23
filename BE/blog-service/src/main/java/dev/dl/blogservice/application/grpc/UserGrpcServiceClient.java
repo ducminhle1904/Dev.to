@@ -7,17 +7,19 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-@Component
-public class UserGrpcService {
+@Service
+public class UserGrpcServiceClient {
 
     @Value("${server.grpc.server}")
     private String serverAddress;
 
-    public ManagedChannel managedChannel() {
-        return ManagedChannelBuilder
+    private final ManagedChannel userManagedChannel;
+
+    public UserGrpcServiceClient() {
+        this.userManagedChannel = ManagedChannelBuilder
                 .forTarget(serverAddress)
                 .defaultLoadBalancingPolicy("round_robin")
                 .usePlaintext()
@@ -29,7 +31,7 @@ public class UserGrpcService {
         UserId userIdRequest = UserId.newBuilder().setUserId(id).build();
         User response;
         try {
-            final UserServiceGrpc.UserServiceBlockingStub blockingStub = UserServiceGrpc.newBlockingStub(managedChannel());
+            final UserServiceGrpc.UserServiceBlockingStub blockingStub = UserServiceGrpc.newBlockingStub(userManagedChannel);
             response = blockingStub.findUserById(userIdRequest);
             return response;
         } catch (Exception e) {

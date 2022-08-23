@@ -23,7 +23,7 @@ public class AuthServiceGrpcClient {
     @Value("${server.grpc.auth-server}")
     private String serverAddress;
 
-    private ManagedChannel authManagedChannel;
+    private final ManagedChannel authManagedChannel;
 
     public AuthServiceGrpcClient() {
         this.authManagedChannel = ManagedChannelBuilder

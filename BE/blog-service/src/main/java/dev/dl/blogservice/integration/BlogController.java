@@ -1,6 +1,6 @@
 package dev.dl.blogservice.integration;
 
-import dev.dl.blogservice.application.grpc.UserGrpcService;
+import dev.dl.blogservice.application.grpc.UserGrpcServiceClient;
 import dev.dl.blogservice.application.mapper.BlogMapper;
 import dev.dl.blogservice.application.request.AddNewBlogRequest;
 import dev.dl.blogservice.application.request.graphql.BlogInputGql;
@@ -31,12 +31,12 @@ import java.util.Optional;
 public class BlogController {
 
     private final BlogService blogService;
-    private final UserGrpcService userGrpcService;
+    private final UserGrpcServiceClient userGrpcServiceClient;
 
     @Autowired
-    public BlogController(BlogService blogService, UserGrpcService userGrpcService) {
+    public BlogController(BlogService blogService, UserGrpcServiceClient userGrpcServiceClient) {
         this.blogService = blogService;
-        this.userGrpcService = userGrpcService;
+        this.userGrpcServiceClient = userGrpcServiceClient;
     }
 
     @PostMapping
@@ -50,7 +50,7 @@ public class BlogController {
     @GetMapping("/{id}")
     public BlogDetailResponse getBlogById(@PathVariable(name = "id") Long id) {
         BlogDto blogDto = this.blogService.findBlogById(id);
-        User user = this.userGrpcService.findUserById(blogDto.getUserId().toString());
+        User user = this.userGrpcServiceClient.findUserById(blogDto.getUserId().toString());
         return BlogMapper.getInstance().dtoToDetailResponse(blogDto, user);
     }
 
@@ -62,7 +62,7 @@ public class BlogController {
     @QueryMapping(name = "blogById")
     public BlogGql findBlogById(@Argument(name = "id") Long id) {
         BlogDto blogDto = this.blogService.findBlogById(id);
-        User user = this.userGrpcService.findUserById(blogDto.getUserId().toString());
+        User user = this.userGrpcServiceClient.findUserById(blogDto.getUserId().toString());
         UserGql userGql = new UserGql();
         if (Optional.ofNullable(user).isPresent()) {
             userGql.setId(user.getUserId());
@@ -77,7 +77,7 @@ public class BlogController {
     @QueryMapping(name = "blogByDto")
     public BlogGql findBlogByDto(@Argument(name = "request") BlogInputGql request) {
         BlogDto blogDto = this.blogService.findBlogById(request.getId());
-        User user = this.userGrpcService.findUserById(blogDto.getUserId().toString());
+        User user = this.userGrpcServiceClient.findUserById(blogDto.getUserId().toString());
         UserGql userGql = new UserGql();
         if (Optional.ofNullable(user).isPresent()) {
             userGql.setId(user.getUserId());

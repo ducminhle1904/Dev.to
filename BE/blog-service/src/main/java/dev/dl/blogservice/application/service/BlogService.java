@@ -1,6 +1,6 @@
 package dev.dl.blogservice.application.service;
 
-import dev.dl.blogservice.application.grpc.UserGrpcService;
+import dev.dl.blogservice.application.grpc.UserGrpcServiceClient;
 import dev.dl.blogservice.application.mapper.BlogMapper;
 import dev.dl.blogservice.domain.dto.BlogDto;
 import dev.dl.blogservice.domain.entity.Blog;
@@ -22,12 +22,12 @@ import java.util.UUID;
 @Transactional(rollbackFor = {DLException.class})
 public class BlogService extends BaseService<Blog, BlogRepository> {
 
-    private final UserGrpcService userGrpcService;
+    private final UserGrpcServiceClient userGrpcServiceClient;
 
     @Autowired
-    public BlogService(BlogRepository repository, UserGrpcService userGrpcService) {
+    public BlogService(BlogRepository repository, UserGrpcServiceClient userGrpcServiceClient) {
         super(repository);
-        this.userGrpcService = userGrpcService;
+        this.userGrpcServiceClient = userGrpcServiceClient;
     }
 
     public BlogDto findBlogById(Long id) {
@@ -44,7 +44,7 @@ public class BlogService extends BaseService<Blog, BlogRepository> {
 
     public BlogDto addNewBlog(BlogDto blogDto) {
         log.info("ADD NEW BLOG");
-        User user = this.userGrpcService.findUserById(blogDto.getUserId().toString());
+        User user = this.userGrpcServiceClient.findUserById(blogDto.getUserId().toString());
         if (Optional.ofNullable(user).isEmpty()) {
             throw DLException.newBuilder().timestamp(DateTimeHelper.generateCurrentTimeDefault())
                     .message("Can not find user").httpStatus(HttpStatus.NOT_IMPLEMENTED).build();
