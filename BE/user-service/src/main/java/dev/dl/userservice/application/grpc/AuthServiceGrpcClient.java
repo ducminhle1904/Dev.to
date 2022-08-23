@@ -1,6 +1,5 @@
 package dev.dl.userservice.application.grpc;
 
-import dev.dl.common.exception.DLException;
 import dev.dl.common.helper.ObjectHelper;
 import dev.dl.common.helper.SHA1Helper;
 import dev.dl.grpc.auth.AuthServiceGrpc;
@@ -24,8 +23,10 @@ public class AuthServiceGrpcClient {
     @Value("${server.grpc.auth-server}")
     private String serverAddress;
 
-    public ManagedChannel managedChannel() {
-        return ManagedChannelBuilder
+    private ManagedChannel authManagedChannel;
+
+    public AuthServiceGrpcClient() {
+        this.authManagedChannel = ManagedChannelBuilder
                 .forTarget(serverAddress)
                 .defaultLoadBalancingPolicy("round_robin")
                 .usePlaintext()
@@ -37,7 +38,7 @@ public class AuthServiceGrpcClient {
         Credential credential = Credential.newBuilder().setUsername(username).setPassword(SHA1Helper.encryptThisString(password)).build();
         CredentialResult result;
         try {
-            final AuthServiceGrpc.AuthServiceBlockingStub blockingStub = AuthServiceGrpc.newBlockingStub(managedChannel());
+            final AuthServiceGrpc.AuthServiceBlockingStub blockingStub = AuthServiceGrpc.newBlockingStub(authManagedChannel);
             result = blockingStub.login(credential);
             return result;
         } catch (Exception e) {
@@ -59,7 +60,7 @@ public class AuthServiceGrpcClient {
                 authToken.addAllAuthorityRole(authority);
             }
             AuthenticationResult result;
-            final AuthServiceGrpc.AuthServiceBlockingStub blockingStub = AuthServiceGrpc.newBlockingStub(managedChannel());
+            final AuthServiceGrpc.AuthServiceBlockingStub blockingStub = AuthServiceGrpc.newBlockingStub(authManagedChannel);
             result = blockingStub.auth(authToken.build());
             return result;
         } catch (Exception e) {

@@ -1,6 +1,5 @@
 package dev.dl.userservice;
 
-import dev.dl.userservice.application.grpc.GrpcServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,7 +33,5 @@ public class UserServiceApplication {
     public static void main(String[] args) throws IOException, InterruptedException {
         setProperty();
         ConfigurableApplicationContext context = SpringApplication.run(UserServiceApplication.class, args);
-        final GrpcServer grpcServer = context.getBean(GrpcServer.class);
-        grpcServer.startGrpc();
     }
 }

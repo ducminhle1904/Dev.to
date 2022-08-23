@@ -1,11 +1,10 @@
 server:
   port: ${SERVER_PORT:8081}
   grpc:
-    port: ${SERVER_GRPC_PORT:7071}
-    auth-server: ${SERVER_GRPC_AUTH_SERVER:static://localhost:7072}
+    auth-server: ${SERVER_GRPC_AUTH_SERVER:static://localhost:7082}
 grpc:
   server:
-    port: ${GRPC_PORT:6071}
+    port: ${GRPC_PORT:7081}
 spring:
   application:
     name: Dev DL User

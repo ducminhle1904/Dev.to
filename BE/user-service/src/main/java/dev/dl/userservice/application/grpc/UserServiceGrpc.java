@@ -8,15 +8,15 @@ import dev.dl.userservice.application.service.UserService;
 import dev.dl.userservice.domain.dto.UserDto;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
+import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
-@Service
+@GrpcService
 public class UserServiceGrpc extends dev.dl.grpc.user.UserServiceGrpc.UserServiceImplBase {
 
     private final UserService userService;
@@ -25,7 +25,6 @@ public class UserServiceGrpc extends dev.dl.grpc.user.UserServiceGrpc.UserServic
     public UserServiceGrpc(UserService userService) {
         this.userService = userService;
     }
-
 
 
     @Override

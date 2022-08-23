@@ -1,11 +1,10 @@
 server:
   port: 8080
   grpc:
-    port: ${SERVER_GRPC_PORT:7070}
-    server: ${SERVER_GRPC_SERVER:static://localhost:7071}
+    user-server: ${SERVER_GRPC_SERVER:static://localhost:7081}
 grpc:
   server:
-    port: ${GRPC_PORT:6070}
+    port: ${GRPC_PORT:7080}
 spring:
   application:
     name: Dev DL Blog

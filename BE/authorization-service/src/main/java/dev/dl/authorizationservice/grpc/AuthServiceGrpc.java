@@ -1,6 +1,5 @@
 package dev.dl.authorizationservice.grpc;
 
-import com.google.protobuf.Descriptors;
 import dev.dl.authorizationservice.dto.UserRoleDto;
 import dev.dl.authorizationservice.entity.User;
 import dev.dl.authorizationservice.infrastructure.RoleRepository;
@@ -19,9 +18,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -29,7 +28,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
-@Service
+@GrpcService
 public class AuthServiceGrpc extends dev.dl.grpc.auth.AuthServiceGrpc.AuthServiceImplBase {
 
     private final UserRepository userRepository;

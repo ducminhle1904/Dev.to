@@ -1,6 +1,5 @@
 package dev.dl.authorizationservice;
 
-import dev.dl.authorizationservice.grpc.GrpcServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -29,8 +28,6 @@ public class AuthorizationServiceApplication {
     public static void main(String[] args) throws IOException, InterruptedException {
         setProperty();
         ConfigurableApplicationContext context = SpringApplication.run(AuthorizationServiceApplication.class, args);
-        final GrpcServer grpcServer = context.getBean(GrpcServer.class);
-        grpcServer.startGrpc();
     }
 
 }
