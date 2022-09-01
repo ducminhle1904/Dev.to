@@ -4,8 +4,8 @@ import dev.dl.grpc.user.User;
 import dev.dl.grpc.user.UserId;
 import dev.dl.grpc.user.UserServiceGrpc;
 import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +18,8 @@ public class UserGrpcServiceClient {
 
     private final ManagedChannel userManagedChannel;
 
-    public UserGrpcServiceClient() {
-        this.userManagedChannel = ManagedChannelBuilder
-                .forTarget(serverAddress)
-                .defaultLoadBalancingPolicy("round_robin")
-                .usePlaintext()
-                .build();
+    public UserGrpcServiceClient(@Qualifier("userManagedChannel") ManagedChannel userManagedChannel) {
+        this.userManagedChannel = userManagedChannel;
     }
 
     public User findUserById(String id) {
