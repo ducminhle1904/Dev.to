@@ -7,6 +7,7 @@ import dev.dl.blogservice.application.request.graphql.BlogInputGql;
 import dev.dl.blogservice.application.response.AddNewBlogResponse;
 import dev.dl.blogservice.application.response.BlogDetailResponse;
 import dev.dl.blogservice.application.service.BlogService;
+import dev.dl.blogservice.application.service.RabbitProducerService;
 import dev.dl.blogservice.domain.dto.BlogDto;
 import dev.dl.blogservice.domain.graphql.BlogGql;
 import dev.dl.blogservice.domain.graphql.valueobject.UserGql;
@@ -32,11 +33,13 @@ public class BlogController {
 
     private final BlogService blogService;
     private final UserGrpcServiceClient userGrpcServiceClient;
+    private final RabbitProducerService rabbitProducerService;
 
     @Autowired
-    public BlogController(BlogService blogService, UserGrpcServiceClient userGrpcServiceClient) {
+    public BlogController(BlogService blogService, UserGrpcServiceClient userGrpcServiceClient, RabbitProducerService rabbitProducerService) {
         this.blogService = blogService;
         this.userGrpcServiceClient = userGrpcServiceClient;
+        this.rabbitProducerService = rabbitProducerService;
     }
 
     @PostMapping
@@ -51,6 +54,14 @@ public class BlogController {
     public BlogDetailResponse getBlogById(@PathVariable(name = "id") Long id) {
         BlogDto blogDto = this.blogService.findBlogById(id);
         User user = this.userGrpcServiceClient.findUserById(blogDto.getUserId().toString());
+        return BlogMapper.getInstance().dtoToDetailResponse(blogDto, user);
+    }
+
+    @GetMapping("/r/{id}")
+    public BlogDetailResponse rab(@PathVariable(name = "id") Long id) {
+        BlogDto blogDto = this.blogService.findBlogById(id);
+        User user = this.userGrpcServiceClient.findUserById(blogDto.getUserId().toString());
+        rabbitProducerService.send(BlogMapper.getInstance().dtoToDetailResponse(blogDto, user));
         return BlogMapper.getInstance().dtoToDetailResponse(blogDto, user);
     }
 

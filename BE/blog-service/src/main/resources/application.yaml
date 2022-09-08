@@ -26,7 +26,29 @@ spring:
     graphiql:
       enabled: true
       path: /graphiql
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 5000
+          max-attempts: 10
+          max-interval: 30000
+          multiplier: 3.0
+rabbit:
+  queue:
+    blog: rabbit-blog
+  route:
+    key: blog-route-key
+direct:
+  exchange:
+    name: blog-direct-exchange
 eureka:
   client:
     service-url:
       default-zone: http://localhost:8761/eureka
+    enabled: false

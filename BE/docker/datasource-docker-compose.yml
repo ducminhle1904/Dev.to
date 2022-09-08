@@ -1,0 +1,40 @@
+version: '3.3'
+services:
+
+  mongodb-db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/apps/mongo:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=citizix
+      - MONGO_INITDB_ROOT_PASSWORD=S3cret
+  postgres-db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/custom/mount:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+  mysql-db:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - ~/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_USER=root
+  cache:
+    image: redis
+    ports:
+      - 6378:6379
+  elasticsearch:
+    image: elasticsearch:8.3.3
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - discovery.type=single-node
