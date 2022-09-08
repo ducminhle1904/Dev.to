@@ -1,14 +1,13 @@
 server:
-  port: 8081
+  port: ${SERVER_PORT:8081}
   grpc:
-    port: ${SERVER_GRPC_PORT:7071}
-#    server: ${SERVER_GRPC_SERVER:static://localhost:7070}
+    auth-server: ${SERVER_GRPC_AUTH_SERVER:static://localhost:7082}
 grpc:
   server:
-    port: ${GRPC_PORT:6071}
+    port: ${GRPC_PORT:7081}
 spring:
   application:
-    name: Coz Contact
+    name: Dev-DL-User
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/dev_dl_user}
     username: ${DB_USERNAME:postgres}
@@ -23,3 +22,14 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
+kafka:
+  server: PLAINTEXT://127.0.0.1:9092,PLAINTEXT://127.0.0.1:9093
+  security:
+    protocol: PLAINTEXT
+  sasl:
+    mechanism: GSSAPI
+  topic-user: user-hub
+  topic-user-reply: user-reply
+  numPartitions: 2
+  replicationFactor: 1
+  group-id: user-service

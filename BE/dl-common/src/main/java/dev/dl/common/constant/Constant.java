@@ -55,10 +55,6 @@ public final class Constant {
 
     public static final String UNDERSCORE = "_";
 
-    public static final String PRODUCT_IMAGE_CATEGORY = "product";
-
-    public static final String USER_IMAGE_CATEGORY = "user";
-
     public static final String SLASH = "/";
 
     public static final String BACKSLASH = "\\";
@@ -70,4 +66,6 @@ public final class Constant {
     public static final String MODERATOR_ROLE = "MODERATOR";
 
     public static final String USER_ROLE = "USER";
+
+    public static final String UUID_REGEX = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
 }

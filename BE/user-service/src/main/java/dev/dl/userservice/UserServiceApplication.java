@@ -1,16 +1,22 @@
 package dev.dl.userservice;
 
-import dev.dl.userservice.application.grpc.GrpcServer;
-import org.springframework.boot.Banner;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.io.File;
 import java.io.IOException;
 
 @SpringBootApplication
+@EnableEurekaClient
+@Slf4j
+@ComponentScan(basePackages = {"dev.dl.common.config"})
+@ComponentScan(basePackages = {"dev.dl.common.exception"})
 public class UserServiceApplication {
+
     private static void setProperty() {
         String directory = String.format("%1$s%2$slog", System.getProperty("user.dir"), File.separator);
         String destination = String.format("%1$s%2$s%3$s", directory, File.separator, "log.log");
@@ -25,11 +31,9 @@ public class UserServiceApplication {
                 "store");
         System.setProperty("logging.store.folder", logStoreFolder);
     }
+
     public static void main(String[] args) throws IOException, InterruptedException {
         setProperty();
         ConfigurableApplicationContext context = SpringApplication.run(UserServiceApplication.class, args);
-        final GrpcServer grpcServer = context.getBean(GrpcServer.class);
-        grpcServer.startGrpc();
     }
-
 }

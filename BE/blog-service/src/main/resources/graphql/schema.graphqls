@@ -1,0 +1,27 @@
+type Query {
+    blogById(id: String): BlogDto
+    blogByDto(request: BlogInput): BlogDto
+}
+
+input BlogInput {
+    id: Int
+    active: Boolean
+}
+
+type BlogDto {
+    id: Int
+    active: Boolean
+    createdAt: String
+    updatedAt: String
+    createdBy: String
+    updatedBy: String
+    title: String
+    body: String
+    user: UserDto
+}
+
+type UserDto {
+    id: ID
+    firstName: String
+    lastName: String
+}

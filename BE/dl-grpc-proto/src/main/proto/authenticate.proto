@@ -1,0 +1,24 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package dev.dl.grpc.auth;
+
+service AuthService {
+  rpc auth (AuthToken) returns (AuthenticationResult) {}
+  rpc login (Credential) returns (CredentialResult) {}
+}
+message AuthToken {
+  string token = 1;
+  repeated string authorityRole = 2;
+}
+message AuthenticationResult {
+  string userId = 1;
+  repeated string role = 2;
+  bool nonLock = 3;
+}
+message Credential {
+  string username = 1;
+  string password = 2;
+}
+message CredentialResult {
+  string token = 1;
+}
