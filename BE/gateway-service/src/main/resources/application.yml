@@ -1,0 +1,20 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: zuul-server
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+
+zuul:
+#  ignored-services: '*'
+  routes:
+    Dev-DL-Blog:
+      path: /dev-dl-blog/**
+      url: http://localhost:8080
+    Dev-DL-User:
+      path: /dev-dl-user/**
+      url: http://localhost:8081
