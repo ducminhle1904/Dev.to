@@ -33,7 +33,7 @@ public class AuthServiceGrpcClient {
 
     public CredentialResult login(String username, String password) {
         log.info("[GRPC SEND REQUEST] LOG IN FOR USER {}", username);
-        Credential credential = Credential.newBuilder().setUsername(username).setPassword(SHA1Helper.encryptThisString(password)).build();
+        Credential credential = Credential.newBuilder().setUsername(username).setPassword(password).build();
         CredentialResult result;
         try {
             final AuthServiceGrpc.AuthServiceBlockingStub blockingStub = AuthServiceGrpc.newBlockingStub(authManagedChannel);

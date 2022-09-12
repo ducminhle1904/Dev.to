@@ -20,5 +20,13 @@ message Credential {
   string password = 2;
 }
 message CredentialResult {
-  string token = 1;
+  string accessToken = 1;
+  int32 expiresIn = 2;
+  string refreshToken = 3;
+  int32 refreshExpiresIn = 4;
+  string tokenType = 5;
+  string idToken = 6;
+  int32 notBeforePolicy = 7;
+  string sessionState = 8;
+  string scope = 9;
 }

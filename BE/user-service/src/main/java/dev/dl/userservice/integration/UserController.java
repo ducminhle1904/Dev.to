@@ -56,12 +56,22 @@ public class UserController {
     public LogInResponse login(@RequestBody LogInRequest request) {
         request.validate();
         CredentialResult credentialResult = this.authServiceGrpcClient.login(request.getUsername(), request.getPassword());
-        if (ObjectHelper.isNullOrEmpty(credentialResult.getToken())) {
+        if (ObjectHelper.isNullOrEmpty(credentialResult.getAccessToken())) {
             throw DLException.newBuilder()
                     .timestamp(DateTimeHelper.generateCurrentTimeDefault())
                     .message("Wrong username or password").build();
         }
-        return new LogInResponse(credentialResult.getToken());
+        return LogInResponse.builder()
+                .accessToken(credentialResult.getAccessToken())
+                .expiresIn(credentialResult.getExpiresIn())
+                .refreshExpiresIn(credentialResult.getRefreshExpiresIn())
+                .refreshToken(credentialResult.getRefreshToken())
+                .tokenType(credentialResult.getTokenType())
+                .idToken(credentialResult.getIdToken())
+                .notBeforePolicy(credentialResult.getNotBeforePolicy())
+                .sessionState(credentialResult.getSessionState())
+                .scope(credentialResult.getScope())
+                .build();
     }
 
     @PostMapping("/validate")

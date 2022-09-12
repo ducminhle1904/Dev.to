@@ -161,7 +161,7 @@ public class RestfulHelper {
             }
         }
         if (request != null) {
-            String data = convertObjectToJsonString(request);
+            String data = request instanceof String ? (String) request : convertObjectToJsonString(request);
             byte[] out = data.getBytes(StandardCharsets.UTF_8);
             OutputStream stream = http.getOutputStream();
             stream.write(out);
@@ -204,12 +204,12 @@ public class RestfulHelper {
             url = this.buildParam(params);
         }
         HttpRequest.Builder builder = HttpRequest.newBuilder()
-                .uri(URI.create(endpoint))
+                .uri(URI.create(url))
                 .headers("Content-Type", "application/json");
         if (input == null) {
             builder.method(method, HttpRequest.BodyPublishers.noBody());
         } else {
-            builder.method(method, HttpRequest.BodyPublishers.ofString(convertObjectToJsonStringGson(input)));
+            builder.method(method, HttpRequest.BodyPublishers.ofString(input instanceof String ? (String) input : convertObjectToJsonStringGson(input)));
         }
         if (requestHeader != null && !requestHeader.isEmpty()) {
             for (Map.Entry<String, String> entry : requestHeader.entrySet()) {

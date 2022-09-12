@@ -1,18 +1,15 @@
-package dev.dl.userservice.application.response;
+package dev.dl.authorizationservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
-import dev.dl.common.response.BaseResponse;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Builder
-public class LogInResponse extends BaseResponse {
+public class KeyCloakLoginResponse {
 
     @SerializedName("access_token")
     @JsonProperty("access_token")
